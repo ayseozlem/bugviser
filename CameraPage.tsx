@@ -1,7 +1,5 @@
-// CameraPage.js
-
 import React, { useRef } from 'react';
-import { Button, View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, Alert, TouchableOpacity, Image } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import axios from 'axios';
 
@@ -31,7 +29,7 @@ const CameraPage = ({ navigation }) => {
           const detectedClass = response.data.predictions[0].class;
           navigation.navigate('Final', { detectedClass });
         } else {
-          navigation.navigate('Final', { detectedClass: "Tahminler bulunamadı" });
+          navigation.navigate('Final', { detectedClass: "Isırık Bulunamadı." });
         }
       } catch (error) {
         console.error('Error sending photo:', error);
@@ -55,7 +53,9 @@ const CameraPage = ({ navigation }) => {
         }}
       />
       <View style={styles.buttonContainer}>
-        <Button title={'Fotoğraf Çek'} onPress={takePicture} color="#841584" />
+        <TouchableOpacity onPress={takePicture}>
+          <Image source={require('./assets/kamera.png')} style={styles.buttonImage} />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -78,7 +78,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     margin: 20,
   },
+  buttonImage: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+  },
 });
 
 export default CameraPage;
-  

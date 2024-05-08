@@ -12,8 +12,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'>
         <Stack.Screen name="Home" component={HomeView} options={{ headerShown: false }} />
-        <Stack.Screen name="Camera" component={CameraPage} />
-        <Stack.Screen name="Final" component={FinalPage} /> 
+        <Stack.Screen name="Camera" component={CameraPage} options={{ title: 'Home Page' }}/>
+        <Stack.Screen name="Final" component={FinalPage} options={{ title: 'Camera' }} /> 
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -27,7 +27,7 @@ const HomeView = () => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.logoContainer}>
           <Image source={require('./assets/icons/logo.png')} style={styles.logo} />
-          <View style={styles.separator} />
+          <View />
         </View>
         <View style={styles.sicksContainer}>
           <Text style={styles.sectionTitle}>Belirtiler</Text>
@@ -140,15 +140,10 @@ const styles = StyleSheet.create({
     marginTop: 35, // Mesafeyi azalttık
   },
   logo: {
-    width: 268, // Logonun genişliğini ayarladık
-    height: 100, // Logonun yüksekliğini ayarladık
+    width: 150, // Logonun genişliğini ayarladık
+    height: 150, // Logonun yüksekliğini ayarladık
   },
-  separator: {
-    width: '100%',
-    height: 1,
-    backgroundColor: 'black',
-    marginVertical: 8,
-  },
+
   sicksContainer: {
     marginTop: 80, // Mesafeyi ayarlamak için
     alignItems: 'center', // Değiştirilen stil 
@@ -210,8 +205,8 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   photoButton: {
-    width: '70%',
-    height: 50,
+    width: "3%",
+    height: "3%",
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
