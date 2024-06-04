@@ -7,13 +7,17 @@ import FinalPage from './FinalPage';
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home'>
         <Stack.Screen name="Home" component={HomeView} options={{ headerShown: false }} />
-        <Stack.Screen name="Camera" component={CameraPage} options={{ title: 'Home Page' }}/>
-        <Stack.Screen name="Final" component={FinalPage} options={{ title: 'Camera' }} /> 
+        <Stack.Screen name="Camera" component={CameraPage} options={{  headerShown: true,
+            headerTransparent: true,
+            headerTitle: 'Belirti Seç', }}/>
+        <Stack.Screen name="Final" component={FinalPage} options={{  headerShown: true,
+            headerTransparent: true,
+            headerTitle: 'Fotoğraf Çek' }} /> 
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -37,7 +41,7 @@ const HomeView = () => {
             <Sicks sickName="Kızarıklık" />
           </View>
           <View style={styles.row}>
-            <Sicks sickName="Ağrı" />
+            <Sicks  sickName="Ağrı" />
             <Sicks sickName="Yanma" />
             <Sicks sickName="Ateş" />
           </View>
@@ -48,8 +52,7 @@ const HomeView = () => {
         style={styles.photoButton}
         onPress={() => navigation.navigate('Camera' as never)}
       >
-        <Image source={require('./assets/icons/ico-camera.png')} />
-        
+        <Image source={require('./assets/icons/ico-camera.png')} style={styles.cameraIcon} />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -78,7 +81,7 @@ const Sicks = ({ sickName }: { sickName: string }) => {
           activeOpacity={1}
         >
           <View style={styles.modalContent}>
-            <TouchableOpacity // Bu kısmı ekledik
+            <TouchableOpacity
               onPress={() => setShowModal(false)}
               style={{ position: 'absolute', top: 10, right: 10 }}
             >
@@ -125,48 +128,48 @@ const Sicks = ({ sickName }: { sickName: string }) => {
   );
 };
 
+const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#ED8204',
-    paddingVertical: 20,
-    paddingHorizontal: 16,
+    paddingVertical: height * 0.02,
+    paddingHorizontal: width * 0.04,
   },
   scrollContent: {
     flexGrow: 1,
   },
   logoContainer: {
     alignItems: 'center',
-    marginTop: 35, // Mesafeyi azalttık
+    marginTop: height * 0.05,
   },
   logo: {
-    width: 150, // Logonun genişliğini ayarladık
-    height: 150, // Logonun yüksekliğini ayarladık
+    width: width * 0.4,
+    height: width * 0.4,
   },
-
   sicksContainer: {
-    marginTop: 80, // Mesafeyi ayarlamak için
-    alignItems: 'center', // Değiştirilen stil 
+    marginTop: height * 0.1,
+    alignItems: 'center',
+    overflow: 'hidden',
     
   },
   sectionTitle: {
     color: 'black',
-    fontSize: 24,
+    fontSize: width * 0.06,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 16,
+    marginBottom: height * 0.02,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16,
+    flexWrap: 'wrap',
+    gap:3,
   },
   cardContainer: {
-    flex: 1,
     width: '30%',
+    marginBottom: height * 0.01,
     aspectRatio: 1,
-    marginBottom: 10,
-    marginRight: 5,
   },
   card: {
     flex: 1,
@@ -177,7 +180,7 @@ const styles = StyleSheet.create({
   },
   cardText: {
     color: 'black',
-    fontSize: 16,
+    fontSize: width * 0.04,
     fontWeight: 'bold',
   },
   modalBackground: {
@@ -188,29 +191,35 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     backgroundColor: 'white',
-    padding: 20,
+    padding: width * 0.05,
     borderRadius: 10,
-    width: Dimensions.get('window').width * 0.8,
+    width: width * 0.8,
   },
   option: {
-    marginVertical: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
+    marginVertical: height * 0.01,
+    paddingVertical: height * 0.01,
+    paddingHorizontal: width * 0.05,
     backgroundColor: '#f0f0f0',
     borderRadius: 5,
   },
   optionText: {
-    fontSize: 16,
+    fontSize: width * 0.04,
     fontWeight: 'bold',
     color: 'black',
   },
   photoButton: {
-    width: "3%",
-    height: "3%",
+    width: width * 0.15,
+    height: width * 0.15,
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: height * 0.02,
   },
-  
+  cameraIcon: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
 });
+
+export default App;

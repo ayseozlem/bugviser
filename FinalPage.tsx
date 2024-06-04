@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Dimensions } from 'react-native';
 
 // Belirli bir sınıfa özel tedavi yöntemleri tipi
 interface TedaviYontemleri {
   [key: string]: {
     tedaviYontemleri: string[];
-    image: string[];
+    image: string;
   };
 }
 
@@ -40,7 +40,7 @@ const FinalPage = ({ route }) => {
         "Kaşıntıyı hafifletmek için antihistaminik bir krem veya losyon kullanın.",
         "Eğer ciddi bir reaksiyon varsa, bir sağlık uzmanına başvurun."
       ],
-      "image": require('./assets/arı.png'),
+      "image": require('./assets/ari.png'),
     },
     "sinek": {
       "tedaviYontemleri": [
@@ -73,10 +73,9 @@ const FinalPage = ({ route }) => {
         "Kaşıntıyı hafifletmek için soğuk kompres uygulayın.",
         "Eğer ciddi bir reaksiyon varsa veya semptomlar devam ederse, bir sağlık uzmanına başvurun."
       ],
-      "image": require('./assets/örümcek.png'),
+      "image": require('./assets/orumcek.png'),
     }
   };
-
 
   const handleButtonClick = () => {
     if (!detectedClass) {
@@ -87,20 +86,23 @@ const FinalPage = ({ route }) => {
     setIsHeaderCentered(false);
   };
 
+  const { width, height } = Dimensions.get('window');
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={[styles.headerCard, isHeaderCentered ? styles.centeredHeader : null]}>
+    <ScrollView contentContainerStyle={[styles.container, showTreatment && styles.containerWithTreatment]}>
+      <View style={[
+        styles.headerCard, 
+        isHeaderCentered ? styles.centeredHeader : null, 
+        showTreatment ? styles.headerWithTreatment : null
+      ]}>
         <View style={styles.detectedClassContainer}>
           <Text style={styles.detected}>Isırık Türü</Text>
           <Text style={styles.detectedClass}>{detectedClass}</Text>
-          {!showTreatment && detectedClass !== "Isırık Bulunamadı."  && (
-  <TouchableOpacity
-    style={styles.button}
-    onPress={handleButtonClick}
-  >
-    <Text style={styles.buttonText}>Tedavi Yöntemleri</Text>
-  </TouchableOpacity>
-)}
+          {!showTreatment && detectedClass !== "Isırık Bulunamadı." && (
+            <TouchableOpacity style={styles.button} onPress={handleButtonClick} >
+              <Text style={styles.buttonText}>Tedavi Yöntemleri</Text>
+            </TouchableOpacity>
+          )}
         </View>
         <Image source={tedaviYontemleri[detectedClass]?.image} style={styles.image} />
       </View>
@@ -120,100 +122,106 @@ const FinalPage = ({ route }) => {
   );
 };
 
+const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    paddingVertical: 20,
-    paddingHorizontal: 16,
+    paddingVertical: height * 0.02,
+    paddingHorizontal: width * 0.04,
     backgroundColor: "#ED8204",
+  },
+  containerWithTreatment: {
+    paddingTop: height * 0.01, 
   },
   headerCard: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'white',
-    padding: 16,
-    marginBottom: 20,
+    padding: width * 0.04,
+    marginBottom: height * 0.02,
     borderRadius: 20,
     borderWidth: 2,
     borderColor: "black",
     shadowColor: "#000000",
     shadowOffset: {
       width: 0,
-      height: 12,
+      height: height * 0.02,
     },
     shadowOpacity: 0.23,
-    shadowRadius: 12.81,
+    shadowRadius: height * 0.03,
     elevation: 16
   },
   centeredHeader: {
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 200, // Sayfanın ortasında olması için istediğiniz değeri ayarlayabilirsiniz
+    marginTop: height * 0.25,
+  },
+  headerWithTreatment: {
+    marginTop: height * 0.1, 
   },
   detectedClassContainer: {
-    fontSize: 24,
+    fontSize: width * 0.06,
     fontWeight: 'bold',
     color: "black",
     flexDirection: 'column',
-    padding: 10,
+    padding: width * 0.02,
     flex: 1,
-    paddingLeft: 60,
   },
   detectedClass: {
-    fontSize: 24,
+    fontSize: width * 0.06,
     fontWeight: "400",
     color: "black",
     flex: 1,
   },
   detected: {
-    fontSize: 24,
+    fontSize: width * 0.06,
     fontWeight: 'bold',
     color: "black",
   },
   image: {
-    width: 100,
-    height: 100,
+    width: width * 0.25,
+    height: width * 0.25,
     resizeMode: 'contain',
   },
   button: {
     backgroundColor: '#ED8204',
     borderRadius: 12,
-    marginTop: 20,
-    width: 150,
-    height: 40,
+    marginTop: height * 0.02,
+    width: width * 0.4,
+    height: height * 0.05,
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
     color: 'black',
-    fontSize: 16,
+    fontSize: width * 0.04,
     textAlign: 'center',
   },
   tedaviYontemleriCard: {
     backgroundColor: 'white',
-    padding: 16,
-    marginBottom: 10,
+    padding: width * 0.04,
+    marginBottom: height * 0.01,
     borderRadius: 10,
-    margin: 15,
+    margin: width * 0.04,
     shadowColor: "#000000",
     shadowOffset: {
       width: 0,
-      height: 7,
+      height: height * 0.01,
     },
     shadowOpacity: 0.21,
-    shadowRadius: 7.68,
+    shadowRadius: height * 0.02,
     elevation: 10
   },
   tedaviYontemleriItem: {
-    fontSize: 16,
+    fontSize: width * 0.04,
     color: "black",
-
   },
   noTreatment: {
-    fontSize: 16,
+    fontSize: width * 0.04,
     fontStyle: 'italic',
     textAlign: 'center',
   },
 });
+
 export default FinalPage;
