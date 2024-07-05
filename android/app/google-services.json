@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "396929449097",
+    "project_id": "bugviser",
+    "storage_bucket": "bugviser.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:396929449097:android:00244284d68fcd07029a58",
+        "android_client_info": {
+          "package_name": "com.bocekisirdi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf4wFerFEEQNrrNbCe08CEt17AfjirGu4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

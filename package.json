@@ -12,6 +12,8 @@
   "dependencies": {
     "@react-native-community/cli": "^13.6.8",
     "@react-native-community/cli-platform-android": "^13.6.8",
+    "@react-native-firebase/app": "^20.1.0",
+    "@react-native-firebase/firestore": "^20.1.0",
     "@react-navigation/native": "^6.1.17",
     "@react-navigation/native-stack": "^6.9.26",
     "axios": "^1.6.8",

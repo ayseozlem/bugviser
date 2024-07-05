@@ -4,6 +4,7 @@ import CameraPage from './CameraPage';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FinalPage from './FinalPage';
+import { addOrUpdateSymptom } from './firestorehelpers';
 
 const Stack = createNativeStackNavigator();
 
@@ -58,13 +59,14 @@ const HomeView = () => {
   );
 }
 
-const Sicks = ({ sickName }: { sickName: string }) => {
+const Sicks = ({ sickName }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedSeverity, setSelectedSeverity] = useState('');
 
-  const handleSelectSeverity = (severity: string) => {
+  const handleSelectSeverity = async (severity: React.SetStateAction<string>) => {
     setSelectedSeverity(severity);
     setShowModal(false);
+    await addOrUpdateSymptom(sickName, severity);  // Update Firestore with selected severity
   };
 
   return (
@@ -127,7 +129,6 @@ const Sicks = ({ sickName }: { sickName: string }) => {
     </View>
   );
 };
-
 const { width, height } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {

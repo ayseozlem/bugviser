@@ -1,79 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Dimensions } from 'react-native';
-
-// Belirli bir sınıfa özel tedavi yöntemleri tipi
-interface TedaviYontemleri {
-  [key: string]: {
-    tedaviYontemleri: string[];
-    image: string;
-  };
-}
-
+import { getTreatmentMethods } from './firestorehelpers'; 
 const FinalPage = ({ route }) => {
   const [detectedClass, setDetectedClass] = useState('');
   const [showTreatment, setShowTreatment] = useState(false);
   const [belirlenenTedaviYontemleri, setBelirlenenTedaviYontemleri] = useState<string[]>([]);
   const [isHeaderCentered, setIsHeaderCentered] = useState(true);
+  const [imageSource, setImageSource] = useState('');
 
   useEffect(() => {
     if (route.params?.detectedClass) {
       setDetectedClass(route.params.detectedClass);
+      fetchTreatmentMethods(route.params.detectedClass);
     }
   }, [route.params?.detectedClass]);
 
-  // İlgili sınıfa özel tedavi yöntemleri
-  const tedaviYontemleri: TedaviYontemleri = {
-    "pire": {
-      "tedaviYontemleri": [
-        "Isırılan bölgeyi hafifçe yıkayın ve sabunla temizleyin.",
-        "Yıkadıktan sonra ılık su ve sabunla temizleyin.",
-        "Isırılan bölgeyi kurulayın ve antiseptik bir losyon veya kremle temizleyin.",
-        "Kaşıntıyı hafifletmek için antihistaminik bir krem kullanın.",
-        "Eğer ciddi bir reaksiyon varsa, bir sağlık uzmanına başvurun."
-      ],
-      "image": require('./assets/pire.jpg'),
-    },
-    "ari": {
-      "tedaviYontemleri": [
-        "Isırılan bölgeyi soğuk su veya buzla temizleyin.",
-        "Arı iğnesini çıkarmak için dikkatlice cımbız kullanın.",
-        "Kaşıntıyı hafifletmek için antihistaminik bir krem veya losyon kullanın.",
-        "Eğer ciddi bir reaksiyon varsa, bir sağlık uzmanına başvurun."
-      ],
-      "image": require('./assets/ari.png'),
-    },
-    "sinek": {
-      "tedaviYontemleri": [
-        "Isırılan bölgeyi temizleyin ve antiseptik bir losyon veya kremle temizleyin.",
-        "Kaşıntıyı hafifletmek için soğuk kompres uygulayın.",
-        "Eğer ciddi bir reaksiyon varsa veya semptomlar devam ederse, bir sağlık uzmanına başvurun."
-      ],
-      "image": require('./assets/sivrisinek.png'),
-    },
-    "tahta-kurusu": {
-      "tedaviYontemleri": [
-        "Isırık bölgesini yıkayın ve antiseptik bir krem ​​kullanın.",
-        "Kaşıntıyı hafifletmek için soğuk kompres uygulayın.",
-        "Eğer ciddi bir reaksiyon varsa veya semptomlar devam ederse, bir sağlık uzmanına başvurun."
-      ],
-      "image": require('./assets/tahtakurusu.png'),
-    },
-    "kene": {
-      "tedaviYontemleri": [
-        "Kene derhal çıkarılmalıdır.",
-        "Cımbız veya özel kene çıkarıcı ile deriyi kene başından yakalayın ve yavaşça çekin.",
-        "Isırık bölgesini yıkayın ve antiseptik bir krem ​​kullanın.",
-        "Eğer ciddi bir reaksiyon varsa veya semptomlar devam ederse, bir sağlık uzmanına başvurun."
-      ],
-      "image": require('./assets/kene.png'),
-    },
-    "orumcek": {
-      "tedaviYontemleri": [
-        "Isırık bölgesini temizleyin ve antiseptik bir losyon veya kremle temizleyin.",
-        "Kaşıntıyı hafifletmek için soğuk kompres uygulayın.",
-        "Eğer ciddi bir reaksiyon varsa veya semptomlar devam ederse, bir sağlık uzmanına başvurun."
-      ],
-      "image": require('./assets/orumcek.png'),
+  const fetchTreatmentMethods = async (detectedClass: string) => {
+    const methodsData = await getTreatmentMethods(detectedClass);
+    if (methodsData) {
+      setBelirlenenTedaviYontemleri(methodsData.yontem);
+      setImageSource(methodsData.resim);
     }
   };
 
@@ -82,7 +28,6 @@ const FinalPage = ({ route }) => {
       return;
     }
     setShowTreatment(true);
-    setBelirlenenTedaviYontemleri(tedaviYontemleri[detectedClass]?.tedaviYontemleri || []);
     setIsHeaderCentered(false);
   };
 
@@ -104,7 +49,7 @@ const FinalPage = ({ route }) => {
             </TouchableOpacity>
           )}
         </View>
-        <Image source={tedaviYontemleri[detectedClass]?.image} style={styles.image} />
+        {imageSource ? <Image source={{ uri: imageSource }} style={styles.image} /> : null}
       </View>
       {showTreatment && detectedClass && (
         <>
