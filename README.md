@@ -77,3 +77,40 @@ To learn more about React Native, take a look at the following resources:
 - [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
 - [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
 - [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+
+
+# BugViser
+
+BugViser is a mobile application designed to help users identify insect bites. The application allows users to take a photo of the bite and predict which insect it belongs to, providing necessary health recommendations.
+
+## Features
+
+- **Insect Identification**: Upload a photo of the bite to predict which insect it belongs to using AI-powered diagnostic algorithms.
+- **Health Recommendations**: Provides appropriate health advice and treatment suggestions based on the identified insect.
+- **User-Friendly Interface**: Facilitates photo upload and result viewing with a simple and intuitive interface.
+
+## How It Works
+
+1. **Take a Photo**: Open the application and capture a clear photo of the bite.
+2. **Diagnosis and Advice**: The AI algorithm analyzes the photo to determine which insect the bite may belong to and provides health recommendations.
+
+## Installation and Usage
+
+### Requirements
+
+- A mobile device with the Android operating system
+- Internet connection
+
+### Usage
+
+1. **Home Screen**: On the main screen of the application, tap the "Take Photo" button to capture a photo of the bite.
+2. **Upload Photo**: Upload the captured photo to the application and initiate the analysis process.
+3. **Results**: Once the analysis is complete, the insect type and health recommendations will be displayed on the screen.
+
+## Contributors
+
+- **Ayşe Özlem Uzunay** - Mobile application developer using React Native
+- **Eslem Erdem** - Responsible for data management, server-side processes, and image analysis
+
+
+
